@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS emploteeTracker_dbo;
-CREATE DATABASE employee_db;
+DROP DATABASE IF EXISTS employeetracker_dbo;
+CREATE DATABASE employeetracker_db;
 
 USE employee_db;
 
