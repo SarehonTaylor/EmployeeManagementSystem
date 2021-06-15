@@ -7,3 +7,21 @@ class Employee {
         this.manager_id = manager_id;
     }
 }
+
+getId() {
+    return this.id;
+}
+getName(0 {
+    return this.first_name
+})
+}
+getRole() {
+
+}
+
+getManager() {
+
+}
+
+}
+module.exports = employee
