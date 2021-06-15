@@ -6,22 +6,18 @@ class Employee {
         this.role_id = manager_id;
         this.manager_id = manager_id;
     }
-}
 
 getId() {
     return this.id;
 }
-getName(0 {
-    return this.first_name
-})
+getName() {
+    return this.first_name + ' ' + this.last_name;
 }
 getRole() {
-
+return this.role_id
 }
-
 getManager() {
-
+return this.manager_id;
 }
 
-}
 module.exports = employee
