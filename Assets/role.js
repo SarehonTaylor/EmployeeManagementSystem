@@ -5,4 +5,15 @@ class Role (
         this.salary = salary;
         this.department_id = department_id
     }
+GetId() {
+    return this.id;
+}
+getTitle() {
+    return this.title;
+}
+getSalary() {
 
+}
+getDepartment() {
+    
+}
