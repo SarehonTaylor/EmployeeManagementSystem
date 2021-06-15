@@ -3,6 +3,6 @@ class Role (
         this.id;
         this.title = title;
         this.salary = salary;
-        thhis.department_id == department_id
+        this.department_id = department_id
     }
 
