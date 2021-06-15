@@ -67,7 +67,36 @@ let roles = [manager, engineer, coder, intern, architect];
 
 //Managers
 let managerId = Math.floor(Math.random() * 10000);
-let Sarehon = new Employee(managerId, 'Sarehon', 'Taylor', roles[0].id, null);
-let Tyler = new Employee(Math.floor(Math.random() * 10000), 'Tyler', 'Smyth', roles[0].id, managerId);
-let Bob = new Employee(Math.floor(Math.random() * 10000), 'Bob', 'Johnson', roles[0].id, managerId);
-let James = new Employee(Math.floor(Math.random() * 10000), 'James', 'Rager;', roles[0].id, managerId);
+let sarehon = new Employee(managerId, 'Sarehon', 'Taylor', roles[0].id, null);
+let tyler = new Employee(Math.floor(Math.random() * 10000), 'Tyler', 'Smyth', roles[0].id, managerId);
+let bob = new Employee(Math.floor(Math.random() * 10000), 'Bob', 'Johnson', roles[0].id, managerId);
+let james = new Employee(Math.floor(Math.random() * 10000), 'James', 'Rager;', roles[0].id, managerId);
+
+//Employees
+let rudolph = new Employee(Math.floor(Math.random() * 10000), 'Rudolph', 'Olsen', roles[1].id, dalton.id);
+let bessie = new Employee(Math.floor(Math.random() * 10000), 'Bessie', 'Morton', roles[1].id, dalton.id);
+let jeanne = new Employee(Math.floor(Math.random() * 10000), 'Jeanne', 'powell', roles[2].id, james.id);
+let annette = new Employee(Math.floor(Math.random() * 10000), 'Annette', 'Mitchell', roles[2].id, james.id);
+let benjamin = new Employee(Math.floor(Math.random() * 10000), 'Benjamin', 'Hernandez', roles[3].id, kyle.id);
+let sophie = new Employee(Math.floor(Math.random() * 10000), 'Sophie', 'Medina', roles[3].id, kyle.id);
+let diana = new Employee(Math.floor(Math.random() * 10000), 'Diana', 'Clayton', roles[4].id, woody.id);
+let willard = new Employee(Math.floor(Math.random() * 10000), 'Willard', 'Sutton', roles[4].id, woody.id);
+let employees = [sarehon, tyler, bob, james, rudolph, bessie, jeanne, annette, benjamin, sophie, diana, willard,];
+
+departments.forEach(i => {
+    connection.query(`insert into department (id, name) values (${i.id}, '${i.name}')`, function (error, results, fields) {
+      if (error) throw error;
+    });
+  })
+  
+  roles.forEach(i => {
+    connection.query(`insert into role (id, title, salary, department_id) values (${i.id}, '${i.title}', ${i.salary}, ${i.department_id})`, function (error, results, fields) {
+      if (error) throw error;
+    });
+  })
+  
+  employees.forEach(i => {
+    connection.query(`insert into employee (id, first_name, last_name, role_id, manager_id) values (${i.id}, '${i.first_name}', '${i.last_name}', ${i.role_id}, ${i.manager_id})`, function (error, results, fields) {
+      if (error) throw error;
+    });
+  })
