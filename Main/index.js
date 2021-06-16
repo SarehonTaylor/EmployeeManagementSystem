@@ -100,3 +100,114 @@ departments.forEach(i => {
       if (error) throw error;
     });
   })
+  const stringValidator = async (input) => {
+    const nameValid = /^[A-Za-z]+$/.test(input);
+    if (!nameValid) {
+      return 'Input must only contain letters';
+    }
+    return true;
+  };
+  const numberValidator = async (input) => {
+    const idValid = /^[0-9]+$/.test(input);
+    if (!idValid) {
+      return 'Input must only contain numbers';
+    }
+    return true;
+  };
+  
+  //Prompts
+  function starterPrompt() {
+    return inquirer.prompt([
+      {
+        type: 'list',
+        name: 'start',
+        message: 'What would you like to do?',
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'View All Employees By Department',
+        'View All Employees By Manager', 'Add Department', 'Add Role', 'Add Employee', 'Remove Department',
+        'Remove Role', 'Remove Employee', 'Update Employee Role', 'Update Employee Manager',
+        'View a Department\'s Utilized Budget', 'Exit'],
+      },
+    ])
+    .then(answers => {
+      switch(answers.start) {
+        case 'View All Departments':
+          viewAllDept()
+        break;
+  
+        case 'View All Roles':
+          viewAllRoles()
+        break;
+  
+        case 'View All Employees':
+          viewAll()
+        break;
+  
+        case 'View All Employees By Department':
+          viewAllByDept()
+        break;
+  
+        case 'View All Employees By Manager':
+          viewAllByManager()
+        break;
+  
+        case 'Add Department':
+          addDept()
+        break;
+  
+        case 'Add Role':
+          addRole()
+        break;
+  
+        case 'Add Employee':
+          addEmployee()
+        break;
+  
+        case 'Remove Department':
+          removeDept()
+        break;
+  
+        case 'Remove Role':
+          removeRole()
+        break;
+  
+        case 'Remove Employee':
+          removeEmployee()
+        break;
+  
+        case 'Update Employee Role':
+          updateRole()
+        break;
+  
+        case 'Update Employee Manager':
+          updateManager()
+        break;
+  
+        case 'View a Department\'s Utilized Budget':
+          viewBudget()
+        break;
+  
+        default:
+          connection.end();
+        break;
+      }
+    })
+  }
+  
+  //View all departments
+  function viewAllDept() {
+    connection.query('select * from department', function (error, results, fields) {
+      if (error) throw error;
+      console.table('Departments:', results);
+    });
+    return inquirer.prompt([
+      {
+        type: 'list',
+        name: 'return',
+        message: 'Hit enter to return home',
+        choices: [''],
+      },
+    ])
+    .then(answers => {
+      starterPrompt();
+    })
+  }
