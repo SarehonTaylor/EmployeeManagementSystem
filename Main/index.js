@@ -211,3 +211,139 @@ departments.forEach(i => {
       starterPrompt();
     })
   }
+  //View all roles
+function viewAllRoles() {
+    connection.query("SELECT role.id AS id, role.title AS title, role.salary AS salary, department.name AS department FROM role JOIN department ON role.department_id = department.id", function (error, results, fields) {
+      if (error) throw error;
+      console.table('Roles:', results);
+    });
+  
+    return inquirer.prompt([
+      {
+        type: 'list',
+        name: 'return',
+        message: 'Hit enter to return home',
+        choices: [''],
+      },
+    ])
+    .then(answers => {
+      starterPrompt()
+    })
+  }
+  function viewAll() {
+    connection.query(`SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS title, department.name AS department, role.salary AS salary, employee.manager_id AS manager_id FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id`, function (error, results, fields) {
+    if (error) throw error;
+      console.table('Employees:', results);
+    });
+  
+    return inquirer.prompt([
+      {
+        type: 'list',
+        name: 'return',
+        message: 'Hit enter to return home',
+        choices: [''],
+      },
+    ])
+    .then(answers => {
+      starterPrompt()
+    })
+  }
+  /View all employees by department
+function viewAllByDept() {
+  connection.query("SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS title, department.name AS department, role.salary AS salary, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id INNER JOIN employee AS manager ON manager.id <=> employee.manager_id ORDER BY department.id ASC", function (error, results, fields) {
+    if (error) throw error;
+    console.table('Employees by Department:', results);
+  });
+
+  return inquirer.prompt([
+    {
+      type: 'list',
+      name: 'return',
+      message: 'Hit enter to return home',
+      choices: [''],
+    },
+  ])
+  .then(answers => {
+    starterPrompt();
+  })
+}
+function viewAllByManager() {
+    connection.query("SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS title, department.name AS department, role.salary AS salary, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id INNER JOIN employee AS manager ON manager.id = employee.manager_id ORDER BY employee.manager_id ASC", function (error, results, fields) {
+      if (error) throw error;
+      console.table('Employees by Manager:', results);
+    });
+  
+    return inquirer.prompt([
+      {
+        type: 'list',
+        name: 'return',
+        message: 'Hit enter to return home',
+        choices: [''],
+      },
+    ])
+    .then(answers => {
+      starterPrompt();
+    })
+  }
+  
+  //Add department
+  function addDept() {
+    return inquirer.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the department\'s name?',
+        validate: stringValidator,
+      },
+    ])
+    .then(answers => {
+      let newDepartment = new Department(Math.floor(Math.random() * 10000), answers.name);
+  
+      connection.query(`insert into department (id, name) values (${newDepartment.id}, '${newDepartment.name}')`, function (error, results, fields) {
+        if (error) throw error;
+      });
+      starterPrompt()
+    })
+  }
+  
+  //Add role
+  function addRole() {
+    connection.query('select * from department', function (error, results, fields) {
+      if (error) throw error;
+  
+      return inquirer.prompt([
+        {
+          type: 'input',
+          name: 'title',
+          message: 'What is the title of the role?',
+          validate: stringValidator,
+        },
+        {
+          type: 'input',
+          name: 'salary',
+          message: 'What is the salary of the role?',
+          validate: numberValidator,
+        },
+        {
+          type: 'list',
+          name: 'department',
+          message: 'What is the department of the role?',
+          choices: results,
+        },
+      ])
+      .then(answers => {
+        let departmentId;
+        connection.query(`select id from department where department.name = '${answers.department}'`, function (error, results, fields) {
+          if (error) throw error;
+          departmentId = results[0].id;   
+  
+          let newRole = new Role(Math.floor(Math.random() * 10000), answers.title, parseInt(answers.salary), departmentId);
+  
+          connection.query(`insert into role (id, title, salary, department_id) values (${newRole.id}, '${newRole.title}', ${newRole.salary}, ${newRole.department_id})`, function (error, results, fields) {
+            if (error) throw error;
+          });
+        })
+        starterPrompt();
+      });
+    });
+  }
