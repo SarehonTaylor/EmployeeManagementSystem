@@ -347,3 +347,45 @@ function viewAllByManager() {
       });
     });
   }
+  
+//Add role
+function addRole() {
+  connection.query('select * from department', function (error, results, fields) {
+    if (error) throw error;
+
+    return inquirer.prompt([
+      {
+        type: 'input',
+        name: 'title',
+        message: 'What is the title of the role?',
+        validate: stringValidator,
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary of the role?',
+        validate: numberValidator,
+      },
+      {
+        type: 'list',
+        name: 'department',
+        message: 'What is the department of the role?',
+        choices: results,
+      },
+    ])
+    .then(answers => {
+      let departmentId;
+      connection.query(`select id from department where department.name = '${answers.department}'`, function (error, results, fields) {
+        if (error) throw error;
+        departmentId = results[0].id;   
+
+        let newRole = new Role(Math.floor(Math.random() * 10000), answers.title, parseInt(answers.salary), departmentId);
+
+        connection.query(`insert into role (id, title, salary, department_id) values (${newRole.id}, '${newRole.title}', ${newRole.salary}, ${newRole.department_id})`, function (error, results, fields) {
+          if (error) throw error;
+        });
+      })
+      starterPrompt();
+    });
+  });
+}
