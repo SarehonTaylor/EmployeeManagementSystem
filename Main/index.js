@@ -389,3 +389,78 @@ function addRole() {
     });
   });
 }
+
+//Add employee function
+function addEmployee() {
+  let roleTitles = [];
+  connection.query('select * from role', function (error, results, fields) {
+    if (error) throw error;
+    for (let i = 0; i < results.length; i++) {
+      roleTitles.push(results[i].title);
+    }
+  
+    let employeeNames = [];  
+    connection.query(`select * from employee`, function (error, results, fields) {
+      if (error) throw error;
+      for (let i = 0; i < results.length; i++) {
+        employeeNames.push(results[i].first_name + ' ' + results[i].last_name);
+      }
+      employeeNames.push('None');
+
+      return inquirer.prompt([
+        {
+          type: 'input',
+          name: 'first_name',
+          message: 'What is the employee\'s first name?',
+          validate: stringValidator,
+        },
+        {
+          type: 'input',
+          name: 'last_name',
+          message: 'What is the employee\'s last name?',
+          validate: stringValidator,
+        },
+        {
+          type: 'list',
+          name: 'role',
+          message: 'What is the employee\'s role?',
+          choices: roleTitles,
+        },
+        {
+          type: 'list',
+          name: 'manager',
+          message: 'Who is the employee\'s manager?',
+          choices: employeeNames,
+        },
+      ])
+      .then(answers => {
+        let getRole;
+        connection.query(`select * from role where title = '${answers.role}'`, function (error, results, fields) {
+          if (error) throw error;
+          getRole = results[0].id;
+
+          let chosenManager;
+          connection.query(`select * from employee`, function (error, results, fields) {
+            if (error) throw error;
+            if (answers.manager === 'None') {
+              chosenManager = null;
+            } else {
+              for (let i = 0; i < results.length; i++) {
+                if (employeeNames[i] === answers.manager) {
+                  chosenManager = results[i].id;
+                }
+              }
+            }
+              
+            let newEmployee = new Employee(Math.floor(Math.random() * 10000), answers.first_name, answers.last_name, getRole, chosenManager);
+
+            connection.query(`insert into employee (id, first_name, last_name, role_id, manager_id) values (${newEmployee.id}, '${newEmployee.first_name}', '${newEmployee.last_name}', ${newEmployee.role_id}, ${newEmployee.manager_id})`, function (error, results, fields) {
+              if (error) throw error;
+            });
+          })
+        });
+        starterPrompt();
+      });
+    });
+  });
+}
