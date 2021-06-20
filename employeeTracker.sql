@@ -1,41 +1,24 @@
-DROP DATABASE IF EXISTS employeetracker_dbo;
-CREATE DATABASE employeetracker_db;
+drop database if exists employee_trackerdb;
+create database employee_trackerdb;
+use employee_trackerdb;
 
-USE employee_db;
-
--- DB SCHEMA WITH THREE TABLES --
-
-CREATE TABLE department (
-    id INT NOT NULL AUTO_INCREMENT,
-
-    name VARCHAR(30) NOT NULL,
-
-    PRIMARY KEY (id)
-
-
-
+create table department (
+	id int not null,
+	name varchar(30),
+    primary key (id)
 );
-
-CREATE TABLE role (
-    id INT NOT NULL AUTO_INCREMENT,
-)
-title VARCHAR(30) NOT NULL,
-salary DECIMAL NOT NULL,
-department_id INT NOT NULL,
-FOREIGN KEY (department_id) REFERENCES department (id),
-PRIMARY KEY (id)
-
-
-CREATE TABLE employee (
-
-  id INT NOT NULL AUTO_INCREMENT,
-  first_name VARCHAR(30) NOT NULL,
-  last_name VARCHAR(30) NOT NULL,
-  role_id INT NOT NULL,
-  FOREIGN KEY (role_id) REFERENCES role(id),
-  manager_id INT NOT NULL, 
-  FOREIGN KEY (manager_id) REFERENCES role(id),
-  PRIMARY KEY (id)
-
-
+create table role (
+	id int not null,
+	title varchar(30),
+    salary decimal,
+    department_id int,
+	primary key (id)
+);
+create table employee (
+	id int not null,
+	first_name varchar(30),
+    last_name varchar(30),
+    role_id int,
+    manager_id int,
+    primary key (id)
 );

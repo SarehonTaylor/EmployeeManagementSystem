@@ -4,13 +4,13 @@ const Employee = require('./assets/employee');
 
 const inquirer = require('inquirer')
 const cTable = require('console.table');
-require ('dotenv'.config();
+require ('dotenv'.config());
 
 const mysql = require('mysql')
 var connection = mysql.createConnection({
     host     : 'localhost',
     user     : process.env.DB_USER,
-    password : process.env.DB_PASS
+    password : process.env.DB_PASS,
     database : process.env.DB_NAME
 });
 
@@ -21,7 +21,6 @@ connection.connect(function(err) {
     }
     console.log('connected as id ' + connection.threadId);
     });
-})
 connection.connect(function(err) {
     if (err) {
       console.error('error connecting: ' + err.stack);
@@ -248,7 +247,7 @@ function viewAllRoles() {
       starterPrompt()
     })
   }
-  /View all employees by department
+  //View all employees by department
 function viewAllByDept() {
   connection.query("SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS title, department.name AS department, role.salary AS salary, concat(manager.first_name, ' ', manager.last_name) AS manager FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id INNER JOIN employee AS manager ON manager.id <=> employee.manager_id ORDER BY department.id ASC", function (error, results, fields) {
     if (error) throw error;
