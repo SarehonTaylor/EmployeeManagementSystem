@@ -19,4 +19,4 @@ getDepartment() {
     }
 }
 
-module.exports = role;
+module.exports = Role;

@@ -1,16 +1,16 @@
-const Department = require('./assets/department')
-const Role = require('./assets/role_id');
+const Department = require('./assets/department');
+const Role = require('./assets/role');
 const Employee = require('./assets/employee');
 
-const inquirer = require('inquirer')
+const inquirer = require('inquirer');
 const cTable = require('console.table');
-require ('dotenv'.config());
+require ('dotenv').config();
 
-const mysql = require('mysql')
+const mysql = require('mysql');
 var connection = mysql.createConnection({
     host     : 'localhost',
     user     : process.env.DB_USER,
-    password : process.env.DB_PASS,
+    password : process.env.DB_PASSWORD,
     database : process.env.DB_NAME
 });
 
@@ -51,15 +51,15 @@ connection.connect(function(err) {
     if (error) throw error;
   });
 //Departments
-let management = new Department(Math.floor(Math.random() * 10000), 'Management');
-let marketing = new Department(Math.floor(Math.random() * 10000), 'Marketing');
-let finance = new Department(Math.floor(Math.random() * 10000), 'Finance');
+let management = new Department (Math.floor(Math.random() * 10000), 'Management');
+let marketing = new Department (Math.floor(Math.random() * 10000), 'Marketing');
+let finance = new Department (Math.floor(Math.random() * 10000), 'Finance');
 let departments = [management, marketing, finance];
 
 //roles
-let manager = new Role(Math.floor(Math.random() * 10000), 'Manager', 75000.00, departments[0].id);
+let manager = new Role(Math.floor(Math.random() * 10000), 'Manager', 85000.00, departments[0].id);
 let engineer = new Role(Math.floor(Math.random() * 10000), 'Engineer', 75000.00, departments[1].id);
-let coder = new Role(Math.floor(Math.random() * 10000), 'Coder', 420069.69, departments[1].id);
+let coder = new Role(Math.floor(Math.random() * 10000), 'Coder', 45000.00, departments[1].id);
 let intern = new Role(Math.floor(Math.random() * 10000), 'Intern', 75000.00, departments[2].id);
 let architect = new Role(Math.floor(Math.random() * 10000), 'Architect', 75000.00, departments[2].id);
 let roles = [manager, engineer, coder, intern, architect];
@@ -72,14 +72,14 @@ let bob = new Employee(Math.floor(Math.random() * 10000), 'Bob', 'Johnson', role
 let james = new Employee(Math.floor(Math.random() * 10000), 'James', 'Rager;', roles[0].id, managerId);
 
 //Employees
-let rudolph = new Employee(Math.floor(Math.random() * 10000), 'Rudolph', 'Olsen', roles[1].id, dalton.id);
-let bessie = new Employee(Math.floor(Math.random() * 10000), 'Bessie', 'Morton', roles[1].id, dalton.id);
-let jeanne = new Employee(Math.floor(Math.random() * 10000), 'Jeanne', 'powell', roles[2].id, james.id);
-let annette = new Employee(Math.floor(Math.random() * 10000), 'Annette', 'Mitchell', roles[2].id, james.id);
-let benjamin = new Employee(Math.floor(Math.random() * 10000), 'Benjamin', 'Hernandez', roles[3].id, kyle.id);
-let sophie = new Employee(Math.floor(Math.random() * 10000), 'Sophie', 'Medina', roles[3].id, kyle.id);
-let diana = new Employee(Math.floor(Math.random() * 10000), 'Diana', 'Clayton', roles[4].id, woody.id);
-let willard = new Employee(Math.floor(Math.random() * 10000), 'Willard', 'Sutton', roles[4].id, woody.id);
+let rudolph = new Employee(Math.floor(Math.random() * 10000), 'Rudolph', 'Olsen', roles[1].id, sarehon.id);
+let bessie = new Employee(Math.floor(Math.random() * 10000), 'Bessie', 'Morton', roles[1].id, sarehon.id);
+let jeanne = new Employee(Math.floor(Math.random() * 10000), 'Jeanne', 'powell', roles[2].id, tyler.id);
+let annette = new Employee(Math.floor(Math.random() * 10000), 'Annette', 'Mitchell', roles[2].id, tyler.id);
+let benjamin = new Employee(Math.floor(Math.random() * 10000), 'Benjamin', 'Hernandez', roles[3].id, bob.id);
+let sophie = new Employee(Math.floor(Math.random() * 10000), 'Sophie', 'Medina', roles[3].id, bob.id);
+let diana = new Employee(Math.floor(Math.random() * 10000), 'Diana', 'Clayton', roles[4].id, james.id);
+let willard = new Employee(Math.floor(Math.random() * 10000), 'Willard', 'Sutton', roles[4].id, james.id);
 let employees = [sarehon, tyler, bob, james, rudolph, bessie, jeanne, annette, benjamin, sophie, diana, willard,];
 
 departments.forEach(i => {

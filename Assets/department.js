@@ -1,7 +1,7 @@
-class Department (
+class Department {
     constructor(id, name) {
-        this.id;
-        this.name;
+        this.id = id;
+        this.name = name;
     }
 
     getId() {
@@ -12,5 +12,4 @@ class Department (
     }
 }
 
-module.export = Department;
-    
+module.exports = Department;
