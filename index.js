@@ -1,4 +1,4 @@
-const Department = require('./assets/department_id')
+const Department = require('./assets/department')
 const Role = require('./assets/role_id');
 const Employee = require('./assets/employee');
 
