@@ -10,6 +10,9 @@
 * [Test](#test)
 * [Questions](#questions)
 ## Description
+![image](https://user-images.githubusercontent.com/74032335/122702056-9d9a8980-d21c-11eb-8eb5-58281cc407c9.png)
+![Untitled_ Jun 20, 2021 11_14 PM](https://user-images.githubusercontent.com/74032335/122702486-78f2e180-d21d-11eb-9d80-7e507bd1ef85.gif)
+
 This CLI Based App Allows You To Add Employees,Departments, And Track Salaries And Per Department Expenses!
 ## Installation
 Run NPM Install And Then Run Node Index.JS To Begin
